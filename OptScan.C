@@ -269,7 +269,7 @@ void OptScan(int sigMass,int A0mass){
 	  Eff = S/Stot;
 	  Sig3 = Eff/(1.5+sqrt(B));
 	  Sig5 = Eff/(2.5+sqrt(B));
-	  if(l==1){
+	  if(l==1){// printing the results only for 1 ptgg cut for each cycle, just a flag to see that it's working
 	  cout<<fixed<<setprecision(2);
 	  cout<<cut_ptgg<<"\t"<<S<<"\t"<<F1<<"\t"<<F2<<"\t"<<F3<<"\t"<<F4<<"\t"<<F5<<"\t"<<F6<<"\t"<<B<<"\t"<<Eff<<"\t";
 	  cout.flags(oldflags);
