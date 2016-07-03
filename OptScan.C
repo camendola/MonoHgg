@@ -49,7 +49,7 @@ void OptScan(int sigMass,int A0mass){
   TCut Cut_pt2;
   TCut Cut_met;
   TCut Cut_ptgg;
-  TCut mggmax = "mgg<130";
+  TCut mggmax = "mgg<130"; //signal region
   TCut mggmin = "mgg>120";
   
   TCut eveto1 = "eleveto1==1";
@@ -94,10 +94,10 @@ void OptScan(int sigMass,int A0mass){
   double Sig5 = 0;
 
   // number of steps of the scan for each variable
-  int NstepsPt1 = 10; 
-  int NstepsPt2 = 3; 
-  int NstepsMET = 10; 
-  int NstepsPtgg =10; 
+  int NstepsPt1 = 15; 
+  int NstepsPt2 = 1; 
+  int NstepsMET = 20; 
+  int NstepsPtgg =20; 
   
   
   double signMax = 0;
@@ -112,9 +112,9 @@ void OptScan(int sigMass,int A0mass){
  
   // value for the first step of the scan for each variable
   if(sigMass==600){
-    firstCut[0]=0.4; //pt1
+    firstCut[0]=0.3; //pt1
     firstCut[1]=0.25; //pt2
-    firstCut[2]=50;   //MET
+    firstCut[2]=80;   //MET
     firstCut[3]=50;   //ptgg
   } 
   
@@ -127,10 +127,10 @@ void OptScan(int sigMass,int A0mass){
   
   
   if(sigMass==1000){
-    firstCut[0]=0.4; 
+    firstCut[0]=0.5; 
     firstCut[1]=0.25; 
-    firstCut[2]=80;
-    firstCut[3]=80;
+    firstCut[2]=120;
+    firstCut[3]=120;
   }
   
   if(sigMass==1200){
@@ -149,10 +149,17 @@ void OptScan(int sigMass,int A0mass){
 
   
   if(sigMass==1700){
-    firstCut[0]=1.3; 
+    firstCut[0]=0.8; 
     firstCut[1]=0.25; 
-    firstCut[2]=280;
-    firstCut[3]=300;
+    firstCut[2]=130;
+    firstCut[3]=130;
+    
+  }
+  if(sigMass==2000){
+    firstCut[0]=1; 
+    firstCut[1]=0.25; 
+    firstCut[2]=250;
+    firstCut[3]=260;
     
   }
 
@@ -255,17 +262,20 @@ void OptScan(int sigMass,int A0mass){
 	  if(F10 < 0) F10 = 0;
 	  if(F11 < 0) F11 = 0;
 	  if(F12 < 0) F12 = 0;
+	  if(F13 < 0) F13 = 0;
+	  if(F14 < 0) F14 = 0;
 	  
 	  B = F1+F2+F3+F4+F5+F6+F7+F8+F9+F10+F11+F12+F13+F14;
 	  Eff = S/Stot;
 	  Sig3 = Eff/(1.5+sqrt(B));
 	  Sig5 = Eff/(2.5+sqrt(B));
+	  if(l==1){
 	  cout<<fixed<<setprecision(2);
 	  cout<<cut_ptgg<<"\t"<<S<<"\t"<<F1<<"\t"<<F2<<"\t"<<F3<<"\t"<<F4<<"\t"<<F5<<"\t"<<F6<<"\t"<<B<<"\t"<<Eff<<"\t";
 	  cout.flags(oldflags);
 	  cout.precision(7);
 	  cout<<"\t"<<Sig3<<"\t"<<Sig5<<endl;
-	  
+	  }
 	  
 	  if(Sig5>OldSig5){
 	    temp = Sig5;  
@@ -289,11 +299,14 @@ void OptScan(int sigMass,int A0mass){
   
   canvas->cd();
   cout<<"##################"<<endl;
+  
+  cout<<"### Signal mZP"<<sigMass<<" mA0"<<A0mass<<" ###"<<endl;
+  cout<<"Signal region 120 < mgg < 130"<<endl;  
   cout<<"Optimal cuts:"<<endl;
   cout<<"pt1/mgg > "<<optCut_pt1<<endl;
   cout<<"pt2/mgg > "<<optCut_pt2<<endl;
-  cout<<"MET > "<<optCut_met<<"GeV"<<endl;
-  cout<<"ptgg > "<<optCut_ptgg<<endl;
+  cout<<"MET > "<<optCut_met<<" GeV"<<endl;
+  cout<<"ptgg > "<<optCut_ptgg<<" GeV"<<endl;
   Cut_pt1 = Form("pt1/mgg>%lf",optCut_pt1);
   Cut_pt2 = Form("pt2/mgg>%lf",optCut_pt2);
   Cut_met = Form("corrMet>%lf",optCut_met);
@@ -357,6 +370,8 @@ void OptScan(int sigMass,int A0mass){
   if(F10 < 0) F10 = 0;
   if(F11 < 0) F11 = 0;
   if(F12 < 0) F12 = 0;
+  if(F13 < 0) F13 = 0;
+  if(F14 < 0) F14 = 0;
   B = F1+F2+F3+F4+F5+F6+F7+F8+F9+F10+F11+F12+F13+F14;
   Eff = S/Stot;
   Sig3 = Eff/(1.5+sqrt(B));
@@ -366,7 +381,12 @@ void OptScan(int sigMass,int A0mass){
   cout.flags(oldflags);
   cout.precision(7);
   cout<<"\t"<<Sig3<<"\t"<<Sig5<<endl;
-
+  cout<<"****"<<endl;
+  cout<<"Scan performed in"<<endl;
+  cout<<""<<firstCut[0]<<" < pt1/mgg < "<<firstCut[0]+0.05*NstepsPt1<<endl;
+  cout<<""<<firstCut[1]<<" < pt2/mgg < "<<firstCut[1]+0.05*NstepsPt2<<endl;
+  cout<<""<<firstCut[2]<<" < MET < "<<firstCut[2]+5*NstepsMET<<" GeV"<<endl;
+  cout<<""<<firstCut[3]<<" < ptgg < "<<firstCut[3]+5*NstepsPtgg<<" GeV"<<endl;
 }
 
 
