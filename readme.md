@@ -14,7 +14,7 @@ produces a reduced ntuple (NtupleName_sel.root) with the main old branches plus:
 ## OptScan.C
 `.x OptScan.C(<Zmass>,<A0mass>)`
 
-(using reduced ntuples from SelEvents.cc)
+(takes as input the reduced ntuples from SelEvents.cc)
 4D scan on pt1/mgg, pt2/mgg, corrMet and ptgg
 
 the range of the scan for each variable needs to be changed manually in the code through the initial values and the required number of steps 
